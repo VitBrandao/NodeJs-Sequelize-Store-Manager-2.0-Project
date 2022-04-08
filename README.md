@@ -111,7 +111,7 @@ Você deve utilizar o banco MySQL para a gestão de dados. Além disso, a API de
 ## Data de Entrega
 
   - Serão `3` dias de projeto.
-  - Data de entrega para avaliação final do projeto: `08/04/2022 14:00`.
+  - Data de entrega para avaliação final do projeto: `11/04/2022 14:00`.
 
 ---
 
