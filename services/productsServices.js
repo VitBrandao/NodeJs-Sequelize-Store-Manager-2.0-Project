@@ -43,7 +43,7 @@ const create = async (body) => {
 
 const update = async (id, body) => {
     const paramsId = id;
-    
+
     const findProduct = await Products.findOne({
         attributes: { exclude: ['createdAt', 'updatedAt'] },
         where: { id: paramsId },
@@ -63,9 +63,27 @@ const update = async (id, body) => {
     return updatedProduct;
 };
 
+const deleteById = async (id) => {
+    const paramsId = id;
+
+    const findProduct = await Products.findOne({
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        where: { id: paramsId },
+    });
+
+    if (!findProduct) return { message: 'Product Not Found' };
+
+    await Products.destroy({
+        where: { id: paramsId },
+    });
+
+    return 'Product Successfully Deleted';
+};
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
+    deleteById,
 };
