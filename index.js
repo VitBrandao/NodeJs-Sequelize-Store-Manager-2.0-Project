@@ -1,5 +1,6 @@
 const express = require('express');
 const productController = require('./controllers/productsController');
+const salesController = require('./controllers/salesController');
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use('/products', productController);
+app.use('/sales', salesController);
 
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
