@@ -3,7 +3,6 @@ const { validateName, validateQuantity } = require('../middlewares/validateProdu
 
 const getAll = async () => {
     const allProducts = await Products.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
         order: [['id', 'ASC']],
     });
 
@@ -11,10 +10,9 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
+    const paramsId = id;
     const productById = await Products.findOne({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-        // eslint-disable-next-line object-shorthand
-        where: { id: id },
+        where: { id: paramsId },
     });
 
     if (productById === null) return { message: 'Product Not Found' };
@@ -31,11 +29,10 @@ const create = async (body) => {
     const qtyVerifications = validateQuantity(quantity);
     if (qtyVerifications.message) return qtyVerifications;
 
-    await Products.create(body);
+    const newProduct = await Products.create(body);
+
     const findNewProduct = await Products.findOne({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-        // eslint-disable-next-line object-shorthand
-        where: { name: name },
+        where: { id: newProduct.dataValues.id },
     });
 
     return findNewProduct;
