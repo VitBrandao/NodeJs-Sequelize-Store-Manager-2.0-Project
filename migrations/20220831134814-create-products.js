@@ -14,7 +14,7 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER,
       },
-    });
+    }, { timestamps: false });
   },
 
   async down(queryInterface, _Sequelize) {
