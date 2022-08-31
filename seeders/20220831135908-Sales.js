@@ -5,9 +5,9 @@ module.exports = {
         date: new Date('2011-08-01T19:58:00.000Z'),
       },
       {
-        date: new Date('2011-08-01T19:58:00.000Z'),
+        date: new Date(),
       },
-    ], { timestamps: false });
+    ]);
   },
 
   async down(queryInterface, _Sequelize) {
