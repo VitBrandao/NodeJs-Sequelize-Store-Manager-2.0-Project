@@ -37,7 +37,23 @@ router.post('/', async (req, res) => {
             return res.status(createProduct.status).json(createProduct.message);
         }
 
-        return res.status(200).json(createProduct);
+        return res.status(201).json(createProduct);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Algo deu errado' });
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateProduct = await productServices.update(id, req.body);
+
+        if (updateProduct.message) {
+            return res.status(404).json(updateProduct);
+        }
+
+        return res.status(200).json(updateProduct);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: 'Algo deu errado' });

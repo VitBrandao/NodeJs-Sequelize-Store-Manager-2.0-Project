@@ -41,8 +41,31 @@ const create = async (body) => {
     return findNewProduct;
 };
 
+const update = async (id, body) => {
+    const paramsId = id;
+    
+    const findProduct = await Products.findOne({
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        where: { id: paramsId },
+    });
+
+    if (!findProduct) return { message: 'Product Not Found' };
+
+    await Products.update(body, {
+        where: { id: paramsId },
+    });
+
+    const updatedProduct = await Products.findOne({
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        where: { id: paramsId },
+    });
+
+    return updatedProduct;
+};
+
 module.exports = {
     getAll,
     getById,
     create,
+    update,
 };
