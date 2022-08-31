@@ -19,7 +19,7 @@ const validateName = (name) => {
 };
 
 const validateQuantity = (qty) => {
-    if (!qty) {
+    if (qty === null || qty === undefined) {
         const message = { 
             message: { message: '"quantity" is required' },
             status: 400, 
