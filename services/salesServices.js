@@ -53,8 +53,35 @@ const create = async (body) => {
     return createdObject;
 };
 
+const update = async (params, body) => {
+    const { quantity: qty, productId: prodId } = body;
+    const { id: paramsId } = params;
+
+    const prodIdVerifications = validateProductId(prodId);
+    if (prodIdVerifications.message) return prodIdVerifications;
+
+    const qtyVerifications = validateQuantity(qty);
+    if (qtyVerifications.message) return qtyVerifications;
+
+    await Sales.update({
+        date: Date.now(),
+        }, { where: { id: paramsId } });
+
+    await SalesProducts.update({
+        saleId: paramsId,
+        productId: prodId,
+        quantity: qty,
+    }, {
+        where: { saleId: paramsId },
+    });
+
+    const createdObject = mountCreatedObject(paramsId, body);
+    return createdObject;
+};
+
 module.exports = {
     getAll,
     getById,
     create,
+    update,
 };
