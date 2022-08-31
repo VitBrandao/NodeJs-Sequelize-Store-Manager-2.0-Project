@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Sales.init({
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     date: DataTypes.DATE,
   }, {
     sequelize,
