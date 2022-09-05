@@ -1,7 +1,8 @@
 const { 
     validateProductId, 
     validateQuantity, 
-    mountCreatedObject } = require('../middlewares/validateSales');
+    mountCreatedObject,
+    mountUpdatedObject } = require('../middlewares/validateSales');
 const { SalesProducts, Sales } = require('../models');
 
 const getAll = async () => {
@@ -75,7 +76,7 @@ const update = async (params, body) => {
         where: { saleId: paramsId },
     });
 
-    const createdObject = mountCreatedObject(paramsId, body);
+    const createdObject = mountUpdatedObject(paramsId, body);
     return createdObject;
 };
 

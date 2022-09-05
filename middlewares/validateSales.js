@@ -44,8 +44,23 @@ const mountCreatedObject = (saleId, saleProdObj) => {
     return createdObject;
 };
 
+const mountUpdatedObject = (saleId, saleProdObj) => {
+    const createdObject = {
+        id: saleId,
+        itemUpdated: [
+            {
+                productId: saleProdObj.productId,
+                quantity: saleProdObj.quantity,
+            },
+        ],
+    };
+
+    return createdObject;
+};
+
 module.exports = {
     validateQuantity,
     validateProductId,
     mountCreatedObject,
+    mountUpdatedObject,
 };
