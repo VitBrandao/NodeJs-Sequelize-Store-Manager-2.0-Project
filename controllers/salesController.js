@@ -3,13 +3,15 @@ const salesServices = require('../services/salesServices');
 
 const router = express.Router();
 
+const errorMessage = 'Algo deu errado';
+
 router.get('/', async (_req, res) => {
     try {
         const allSales = await salesServices.getAll();
         return res.status(200).json(allSales);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Algo deu errado' });
+        return res.status(500).json({ message: errorMessage });
     }
 });
 
@@ -25,7 +27,7 @@ router.get('/:id', async (req, res) => {
         return res.status(200).json(allSales);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Algo deu errado' });
+        return res.status(500).json({ message: errorMessage });
     }
 });
 
@@ -40,7 +42,7 @@ router.post('/', async (req, res) => {
         return res.status(201).json(createSale);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Algo deu errado' });
+        return res.status(500).json({ message: errorMessage });
     }
 });
 
@@ -55,7 +57,22 @@ router.put('/:id', async (req, res) => {
         return res.status(201).json(updateSale);
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Algo deu errado' });
+        return res.status(500).json({ message: errorMessage });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const deleteSale = await salesServices.deleteSale(req.params);
+
+        if (deleteSale.message) {
+            return res.status(deleteSale.status).json(deleteSale.message);
+        }
+
+        return res.status(204).json();
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: errorMessage });
     }
 });
 

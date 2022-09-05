@@ -80,9 +80,36 @@ const update = async (params, body) => {
     return createdObject;
 };
 
+const deleteSale = async (params) => {
+    const { id: paramsId } = params;
+
+    const findSale = await SalesProducts.findOne({
+        attributes: { exclude: ['id'] },
+        where: { saleId: paramsId },
+    });
+
+    const saleNull = findSale === null;
+    const saleUndef = findSale === undefined;
+
+    if (saleNull || saleUndef) {
+        return { message: { message: 'Sale Not Found' }, status: 404 };
+    }
+
+    await SalesProducts.destroy({
+        where: { saleId: paramsId }, 
+    });
+
+    await Sales.destroy({
+        where: { id: paramsId },
+    });
+
+    return 'Sale Successfully Deleted';
+};
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
+    deleteSale,
 };
